@@ -23,7 +23,7 @@ function createBase(pointsControle, degre, noeuds) {
     if(taille>=3){//si la courbe ne comporte pas 3 points ignore la suite
         let courbe = [];
         //création du tableau lié à la courbe
-        for(let t = 0; t<1;t=t+0.005){//le t variant de 0 à 1 dans l'équation de bernstein pour pouvoir créer chaque point
+        for(let t = noeuds[degre]; t<noeuds[taille] ;t+=0.05){//le t variant de 0 à 1 dans l'équation de bernstein pour pouvoir créer chaque point
             x = 0;
             y = 0;
             for(let i = 0; i<taille;i++){
@@ -33,7 +33,7 @@ function createBase(pointsControle, degre, noeuds) {
             }
             courbe.push(new THREE.Vector3(x,y,0));//ajout des points à la courbe
         }
-       
+        console.log(courbe);
         return courbe;//on retourne tous les points de la courbe
     }
     else {
