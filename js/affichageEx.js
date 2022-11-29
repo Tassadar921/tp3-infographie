@@ -108,6 +108,17 @@ document.getElementById("courbe3").addEventListener("click",(event)=>{//event li
     refresh(document.getElementById('courbe3').checked);//met à jour le graph
 });
 
+document.getElementById("validerOrdre").addEventListener("click", (e) => {
+    e.preventDefault();
+   const ordre = document.getElementById("ordre").value;
+   if(Number(ordre)){
+       degre = Number(ordre-1);
+       console.log(ordre);
+   }else{
+         alert("Veuillez entrer un ordre > 1");
+   }
+});
+
 document.getElementById("curseurX").addEventListener("mousemove",(event)=>{//fonction de translation sur x
     transX = -transX;
     tabPointsControle[IDSelectedCurve] = translation("x",transX, tabPointsControle[IDSelectedCurve]);//remet à zero la translation

@@ -26,6 +26,8 @@ let planeID;
 //indice de la ligne de tabPointsControle correspondant à la courbe affichée
 let IDSelectedCurve = 0;
 
+let degre;
+
 //remise à zero de tous les angles et translations
 let angle = 0;
 let transX = 0;
