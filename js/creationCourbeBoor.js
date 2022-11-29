@@ -1,20 +1,21 @@
-function boor(pointsControle, k, j, t, dim) {//algorithme récursif de decasteljau
-    if (k == 0) {//condition de sortie : si k vaut 0 (on se trouve à la base de la pyramide)
+function boor(pointsControle, ordre, noeuds, t,i,j, dim) {//algorithme récursif de decasteljau
+    if (j == 0) {//condition de sortie : si k vaut 0 (on se trouve à la base de la pyramide)
         switch (dim) {//permet juste de retourner la valeur de x ou y
             case "x":
-                return (pointsControle[j].x);
+                return (pointsControle[i].x);
                 break
             case "y":
-                return (pointsControle[j].y);
+                return (pointsControle[i].y);
                 break
         }
     }
     else {
-        return ( (1-t)*Decasteljau(pointsControle, k - 1, j, t, dim) + t*Decasteljau(pointsControle, k - 1, j + 1, t, dim));//calcul des deux points précédant en appelant la fonction dans laquelle on se trouve
+        let alpha = (t - noeuds[i])/(noeuds[i+ordre-j] - noeuds[i]);
+        return ( (1-alpha)*boor(pointsControle, ordre, noeuds, t, i-1, j-1, dim) + alpha*boor(pointsControle, ordre, noeuds, t, i, j-1, dim));//calcul des deux points précédant en appelant la fonction dans laquelle on se trouve
     }
 }
 
-function createBoor(pointsControle) {
+function createBoor(pointsControle, degre, noeuds) {
     let x = 0;                         
     let y = 0;
     let taille = pointsControle.length;
@@ -24,14 +25,18 @@ function createBoor(pointsControle) {
         let courbe = [];
         //création du tableau lié à la courbe
         for(let t = 0; t<1;t=t+0.005){//le t variant de 0 à 1 dans l'équation de bernstein pour pouvoir créer chaque point
-            x = 0;
-            y = 0;
-            for(let i = 0; i<taille;i++){
-                x = Decasteljau(pointsControle, pointsControle.length-1, 0, t, "x");//appel de l'agorythme récursif de decasteljau sur x et y
-                y = Decasteljau(pointsControle, pointsControle.length-1, 0, t, "y");
+            for(let r = 0; r < noeuds.length; r++){
+                if(t<noeuds[r+1] && t>noeuds[r]){
+                    console.log(r);
+                    x = boor(pointsControle, degre+1, noeuds, t, r, taille-1, "x");//appel de l'agorythme récursif de decasteljau sur x et y
+                    y = boor(pointsControle, degre+1, noeuds, t, r, taille-1, "y");
+                    courbe.push(new THREE.Vector3(x,y,0));//ajout des points à la courbe
+                    r = noeuds.length;
+                    
+                }
             }
-            courbe.push(new THREE.Vector3(x,y,0));//ajout des points à la courbe
-        }        
+        }    
+        console.log(courbe);    
         return courbe;//on retourne tous les points de la courbe
     }
     else {
