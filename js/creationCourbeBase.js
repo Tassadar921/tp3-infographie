@@ -33,7 +33,6 @@ function createBase(pointsControle, degre, noeuds) {
             }
             courbe.push(new THREE.Vector3(x,y,0));//ajout des points à la courbe
         }
-        console.log(courbe);
         return courbe;//on retourne tous les points de la courbe
     }
     else {
