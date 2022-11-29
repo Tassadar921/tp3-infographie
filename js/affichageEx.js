@@ -113,7 +113,8 @@ document.getElementById("validerOrdre").addEventListener("click", (e) => {
    const ordre = document.getElementById("ordre").value;
    if(Number(ordre)){
        degre = Number(ordre-1);
-       console.log(ordre);
+       majAffichagePoints();
+       majGraphique();
    }else{
          alert("Veuillez entrer un ordre > 1");
    }

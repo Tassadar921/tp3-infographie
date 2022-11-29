@@ -26,7 +26,7 @@ let planeID;
 //indice de la ligne de tabPointsControle correspondant à la courbe affichée
 let IDSelectedCurve = 0;
 
-let degre = 0;
+let degre = 1;
 document.getElementById("ordre").value = degre;
 
 //remise à zero de tous les angles et translations
