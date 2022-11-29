@@ -111,7 +111,7 @@ document.getElementById("courbe3").addEventListener("click",(event)=>{//event li
 document.getElementById("validerOrdre").addEventListener("click", (e) => {
     e.preventDefault();
    const ordre = document.getElementById("ordre").value;
-   if(Number(ordre)){
+   if(Number(ordre)>0){
        degre = Number(ordre-1);
        majAffichagePoints();
        majGraphique();
