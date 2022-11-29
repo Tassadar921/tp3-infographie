@@ -38,7 +38,7 @@ document.getElementById("curseurY").value = 250;
 document.getElementById("curseurRot").value = 0;
 
 //par défaut bernstein, mais switch avec decasteljau en fonction du bouton cliqué
-let methode = "bernstein";
+let methode = "base";
 
 //on ajoute le plan contenant les points draggable à la scène
 scene.add(configPlane());

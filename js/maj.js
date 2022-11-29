@@ -4,18 +4,18 @@ function chargeDraw(pointsControle, methode, addingPoint = false) {
     let geometry;
     let drawing;
     let noeuds = new Array;
-    for(let i = 0; i < pointsControle.length; i++) {
-        
+    for(let i = 0; i < pointsControle.length+degre+1; i++) {
+        noeuds.push(i);
     }
 
     let points = [];
 
     switch (methode) {
         case 'base':
-            points = createBase(pointsControle, degre, );
+            points = createBase(pointsControle, degre, noeuds);
             break;
         case 'boor':
-            points = createDecastlejau(pointsControle);
+            points = createBoor(pointsControle);
             break;
     }
 
