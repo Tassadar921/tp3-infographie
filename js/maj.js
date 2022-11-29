@@ -5,13 +5,13 @@ function chargeDraw(pointsControle, methode, addingPoint = false) {
     let drawing;
     let noeuds = new Array;
     
-    for(let i = 0; i < pointsControle.length+degre+1; i++) {
+    for(let i = 0; i < pointsControle.length+degre+1; i++) {//calcul du vecteur des noeuds
         noeuds.push((1/(degre + pointsControle.length))*i);
     }
 
     let points = [];
 
-    switch (methode) {
+    switch (methode) {//choix de la méthode
         case 'base':
             points = createBase(pointsControle, degre, noeuds);
             break;
