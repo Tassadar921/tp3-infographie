@@ -1,6 +1,6 @@
 function fctBSpline(m, i, t, noeuds) {
-    //fonction pour appeler l'équation de bernstein 
-    if (m == 0) {//condition de sortie : si k vaut 0 (on se trouve à la base de la pyramide)
+    //fonction récurssive de base B-spline
+    if (m == 0) {//condition de sortie : si m vaut 0 (on se trouve à la base de la pyramide)
         if(noeuds[i] <= t && noeuds[i+1] > t) {
             return 1;
         }
@@ -9,7 +9,7 @@ function fctBSpline(m, i, t, noeuds) {
         }
     }
     else {
-        return ((t-noeuds[i])/(noeuds[i+m]-noeuds[i])*fctBSpline(m-1, i, t, noeuds) + (noeuds[i+m+1]-t)/(noeuds[i+m+1]-noeuds[i+1])*fctBSpline(m-1, i+1, t, noeuds));//calcul des deux points précédant en appelant la fonction dans laquelle on se trouve
+        return ((t-noeuds[i])/(noeuds[i+m]-noeuds[i])*fctBSpline(m-1, i, t, noeuds) + (noeuds[i+m+1]-t)/(noeuds[i+m+1]-noeuds[i+1])*fctBSpline(m-1, i+1, t, noeuds));//retour des valeurs calculé récurssivement
     }
 }
 
@@ -23,13 +23,13 @@ function createBase(pointsControle, degre, noeuds) {
     if(taille>=3){//si la courbe ne comporte pas 3 points ignore la suite
         let courbe = [];
         //création du tableau lié à la courbe
-        for(let t = noeuds[degre]; t<noeuds[taille] ;t+=0.05){//le t variant de 0 à 1 dans l'équation de bernstein pour pouvoir créer chaque point
+        for(let t = noeuds[degre]; t<noeuds[noeuds.length - degre - 1] ;t+=0.01){//le t variant entre les noeuds pour créer chaque point
             x = 0;
             y = 0;
             for(let i = 0; i<taille;i++){
-                let bSpline = fctBSpline(degre, i, t, noeuds); //appel du polynome de bernstein soit la fonction de base
-                x = x + pointsControle[i].x * bSpline;//courbe de bezier sur x
-                y = y + pointsControle[i].y * bSpline;//courbe de bezier sur y
+                let bSpline = fctBSpline(degre, i, t, noeuds); //appel de la fonction de base B-spline
+                x = x + pointsControle[i].x * bSpline;//courbe de base sur x
+                y = y + pointsControle[i].y * bSpline;//courbe de base sur y
             }
             courbe.push(new THREE.Vector3(x,y,0));//ajout des points à la courbe
         }
@@ -39,13 +39,4 @@ function createBase(pointsControle, degre, noeuds) {
     else {
         return "error";//retourne une erreur (utilisé pour du déboguage)
     }
-}
-
-function fact(x){//fonction permettant le calcul de factoriels
-	let result = 1;
-	while (x>0){
-		result = result*x;
-		x--;
-	}
-	return result;
 }
