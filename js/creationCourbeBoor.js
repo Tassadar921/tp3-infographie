@@ -1,4 +1,4 @@
-function Decasteljau(pointsControle, k, j, t, dim) {//algorithme récursif de decasteljau
+function boor(pointsControle, k, j, t, dim) {//algorithme récursif de decasteljau
     if (k == 0) {//condition de sortie : si k vaut 0 (on se trouve à la base de la pyramide)
         switch (dim) {//permet juste de retourner la valeur de x ou y
             case "x":
@@ -14,7 +14,7 @@ function Decasteljau(pointsControle, k, j, t, dim) {//algorithme récursif de de
     }
 }
 
-function createDecastlejau(pointsControle) {
+function createBoor(pointsControle) {
     let x = 0;                         
     let y = 0;
     let taille = pointsControle.length;

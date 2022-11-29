@@ -1,12 +1,23 @@
-function Bernstein(n, i, t) {
+function fctBSpline(m, i, t, noeuds) {
     //fonction pour appeler l'équation de bernstein 
-    return (fact(n)/(fact(i)*fact(n-i)))*Math.pow(t,i)*Math.pow((1-t), n-i); 
+    if (m == 0) {//condition de sortie : si k vaut 0 (on se trouve à la base de la pyramide)
+        if(noeuds[i] <= t && noeuds[i+1] > t) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+    else {
+        return ((t-noeuds[i])/(noeuds[i+m]-noeuds[i])*fctBSpline(m-1, i, t, noeuds) + (noeuds[i+m+1]-t)/(noeuds[i+m+1]-noeuds[i+1])*fctBSpline(m-1, i+1, t, noeuds));//calcul des deux points précédant en appelant la fonction dans laquelle on se trouve
+    }
 }
 
-function createBernstein(pointsControle) {
-    let x = 0;                         
+function createBase(pointsControle, degre, noeuds) {
+    let x = 0;                   
     let y = 0;
     let taille = pointsControle.length;
+
     //mise en place des variables utiles par la suite
 
     if(taille>=3){//si la courbe ne comporte pas 3 points ignore la suite
@@ -16,9 +27,9 @@ function createBernstein(pointsControle) {
             x = 0;
             y = 0;
             for(let i = 0; i<taille;i++){
-                let Bern = Bernstein(taille-1, i, t); //appel du polynome de bernstein soit la fonction de base
-                x = x + pointsControle[i].x * Bern;//courbe de bezier sur x
-                y = y + pointsControle[i].y * Bern;//courbe de bezier sur y
+                let bSpline = fctBSpline(degre, i, t, noeuds); //appel du polynome de bernstein soit la fonction de base
+                x = x + pointsControle[i].x * bSpline;//courbe de bezier sur x
+                y = y + pointsControle[i].y * bSpline;//courbe de bezier sur y
             }
             courbe.push(new THREE.Vector3(x,y,0));//ajout des points à la courbe
         }

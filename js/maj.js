@@ -3,14 +3,18 @@
 function chargeDraw(pointsControle, methode, addingPoint = false) {
     let geometry;
     let drawing;
+    let noeuds = new Array;
+    for(let i = 0; i < pointsControle.length; i++) {
+        
+    }
 
     let points = [];
 
     switch (methode) {
-        case 'bernstein':
-            points = createBernstein(pointsControle);
+        case 'base':
+            points = createBase(pointsControle, degre, );
             break;
-        case 'decasteljau':
+        case 'boor':
             points = createDecastlejau(pointsControle);
             break;
     }
